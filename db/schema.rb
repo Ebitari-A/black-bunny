@@ -10,9 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_093629) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_114713) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "reservations", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone_number"
+    t.integer "covers"
+    t.string "status", default: "booked"
+    t.text "dietary_requirements"
+    t.text "reservation_notes"
+    t.bigint "time_slot_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["time_slot_id"], name: "index_reservations_on_time_slot_id"
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.integer "max_capacity"
+    t.time "opening_time_start"
+    t.time "opening_time_end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "time_slots", force: :cascade do |t|
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "slot_capacity"
+    t.bigint "restaurant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_time_slots_on_restaurant_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_093629) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "reservations", "time_slots"
+  add_foreign_key "time_slots", "restaurants"
 end
