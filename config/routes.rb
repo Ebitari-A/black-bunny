@@ -7,6 +7,6 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "restaurants#dashboard"
 
-  resources :reservations, only: [:index, :show, :create, :update]
+  resources :reservations, only: [:index, :show, :new, :create, :update]
 
 end

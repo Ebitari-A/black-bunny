@@ -35,8 +35,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_114713) do
     t.integer "max_capacity"
     t.time "opening_time_start"
     t.time "opening_time_end"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_restaurants_on_user_id"
   end
 
   create_table "time_slots", force: :cascade do |t|
@@ -62,5 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_114713) do
   end
 
   add_foreign_key "reservations", "time_slots"
+  add_foreign_key "restaurants", "users"
   add_foreign_key "time_slots", "restaurants"
 end
