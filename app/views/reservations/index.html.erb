@@ -1,0 +1,14 @@
+<%= link_to "add a new reservation", new_reservation_path %>
+
+<ul>
+<% @reservations.each do |reservation| %>
+  <%= reservation.first_name %>
+  <%= reservation.last_name %>
+  <%= reservation.email %>
+  <%= reservation.phone_number %>
+  <%= reservation.covers %>
+  <%= reservation.status %>
+  <%= reservation.reservation_notes %>
+  <%= reservation.dietary_requirements %>
+<% end %>
+</ul>
